@@ -1,0 +1,331 @@
+/* Sacred Earth Design System for Aavira Wellness */
+:root {
+  /* Color Tokens */
+  --deep-sage: #5A6B5B;
+  --sage-dark: #3B483C;
+  --sage-deeper: #2B372C;
+  --sage-light: #8A9B7E;
+  --sage-soft: rgba(90, 107, 91, 0.15);
+  
+  --warm-bronze: #B8956A;
+  --bronze-light: #D4B892;
+  --bronze-hover: #9E7D53;
+  --bronze-glow: rgba(184, 149, 106, 0.25);
+  
+  --charcoal: #2A2A2A;
+  --charcoal-soft: #383838;
+  --cream: #F5F1E8;
+  --cream-light: #FAF8F3;
+  --cream-pure: #FFFFFF;
+  
+  --deep-brown: #4A3F35;
+  --terracotta: #C17857;
+  
+  /* Font Tokens */
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-heading: 'Playfair Display', 'Cormorant Garamond', serif;
+  --font-script: 'Allura', cursive;
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Transitions */
+  --transition-fast: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--cream);
+  color: var(--charcoal);
+  line-height: 1.7;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* Custom Selection */
+::selection {
+  background-color: var(--warm-bronze);
+  color: var(--cream-light);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--sage-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--warm-bronze);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bronze-light);
+}
+
+/* Typography Utility Classes */
+.font-script {
+  font-family: var(--font-script);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Arch Frame Style */
+.arch-frame {
+  border-radius: 200px 200px 0 0;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--warm-bronze);
+}
+
+.arch-frame-double {
+  position: relative;
+}
+.arch-frame-double::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 210px 210px 0 0;
+  border: 1px solid rgba(184, 149, 106, 0.4);
+  pointer-events: none;
+}
+
+/* Gold Accent Border */
+.gold-border {
+  border: 1px solid var(--warm-bronze);
+}
+
+.gold-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--warm-bronze), transparent);
+}
+
+/* Glassmorphic Navbar Overlay */
+.nav-scrolled {
+  background-color: rgba(59, 72, 60, 0.95) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 16px 0 !important;
+}
+
+/* Custom Container */
+.container {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Section Spacing */
+.section-padding {
+  padding: 90px 0;
+}
+
+/* Dual Button Styles */
+.btn-bronze {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--warm-bronze);
+  color: var(--cream-light);
+  padding: 16px 34px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--warm-bronze);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 15px rgba(184, 149, 106, 0.2);
+}
+
+.btn-bronze:hover {
+  background-color: var(--bronze-hover);
+  border-color: var(--bronze-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(184, 149, 106, 0.35);
+  color: #fff;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: transparent;
+  color: var(--cream-light);
+  padding: 16px 34px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--cream-light);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-outline:hover {
+  background-color: var(--cream-light);
+  color: var(--sage-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline-sage {
+  border-color: var(--deep-sage);
+  color: var(--deep-sage);
+}
+.btn-outline-sage:hover {
+  background-color: var(--deep-sage);
+  color: var(--cream-light);
+}
+
+/* Hover Accent Line Animation */
+.link-hover {
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-hover::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background-color: var(--warm-bronze);
+  transition: width 0.3s ease;
+}
+
+.link-hover:hover::after, .link-hover.active::after {
+  width: 100%;
+}
+
+/* Card Hover Elevation */
+.service-card {
+  transition: var(--transition-smooth);
+}
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  border-left-color: var(--warm-bronze) !important;
+}
+
+/* Radial Gradient Overlay Utility */
+.hero-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(22, 28, 23, 0.65) 0%,
+    rgba(59, 72, 60, 0.8) 50%,
+    rgba(43, 55, 44, 0.95) 100%
+  );
+}
+
+/* Subtle Pulsing Animation */
+@keyframes breathingPulse {
+  0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+  50% { transform: scale(1.05) rotate(180deg); opacity: 0.9; }
+  100% { transform: scale(1) rotate(360deg); opacity: 0.6; }
+}
+
+.breathing-element {
+  animation: breathingPulse 25s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   COMPREHENSIVE RESPONSIVE MEDIA QUERIES (Mobile, Tablet, Desktop)
+   ========================================================================== */
+
+/* Tablets & Small Laptops (max-width: 992px) */
+@media (max-width: 992px) {
+  .container {
+    padding: 0 20px;
+  }
+  .section-padding {
+    padding: 70px 0;
+  }
+}
+
+/* Tablets (max-width: 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 18px;
+  }
+  .section-padding {
+    padding: 55px 0;
+  }
+  .btn-bronze, .btn-outline {
+    width: 100%;
+    padding: 15px 24px;
+    font-size: 12px;
+  }
+  .arch-frame {
+    border-radius: 120px 120px 0 0;
+  }
+}
+
+/* Mobile Devices (max-width: 576px) */
+@media (max-width: 576px) {
+  .container {
+    padding: 0 16px;
+  }
+  .section-padding {
+    padding: 45px 0;
+  }
+  h1 {
+    font-size: 32px !important;
+    line-height: 1.2 !important;
+  }
+  h2 {
+    font-size: 26px !important;
+    line-height: 1.25 !important;
+  }
+  h3 {
+    font-size: 22px !important;
+  }
+  p {
+    font-size: 14.5px !important;
+    line-height: 1.65 !important;
+  }
+  .btn-bronze, .btn-outline {
+    padding: 14px 20px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+  }
+}
