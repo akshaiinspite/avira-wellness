@@ -50,7 +50,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onExploreServices }) 
           loop
           muted
           playsInline
-          poster="/images/hero_waterfall.png"
           style={{
             width: '100%',
             height: '120%',
@@ -101,203 +100,188 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onExploreServices }) 
           opacity: contentOpacity
         }}
       >
-        <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          style={{ maxWidth: '720px', textAlign: 'left' }}
-        >
-          {/* Eyebrow Tagline */}
+        <div style={{ maxWidth: '780px' }}>
+          
+          {/* Eyebrow Label */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
             style={{ 
-              display: 'flex', 
+              display: 'inline-flex', 
               alignItems: 'center', 
-              gap: '14px',
-              marginBottom: '20px'
+              gap: '10px',
+              marginBottom: '20px',
+              backgroundColor: 'rgba(20, 27, 21, 0.45)',
+              padding: '8px 18px',
+              borderRadius: '30px',
+              border: '1px solid rgba(184, 149, 106, 0.35)',
+              backdropFilter: 'blur(8px)'
             }}
           >
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#B8956A', display: 'inline-block' }} />
             <span 
               style={{ 
-                width: '50px', 
-                height: '1.5px', 
-                backgroundColor: '#B8956A', 
-                display: 'inline-block',
-                boxShadow: '0 0 10px rgba(184, 149, 106, 0.6)'
-              }} 
-            />
-            <span 
-              style={{ 
-                color: '#D4B892', 
                 fontSize: '11px', 
                 fontWeight: 600, 
-                letterSpacing: '3.5px', 
-                textTransform: 'uppercase',
-                textShadow: '0 2px 10px rgba(0,0,0,0.9)'
+                letterSpacing: '3px', 
+                color: '#D4B892', 
+                textTransform: 'uppercase'
               }}
             >
               INTEGRATIVE WELLNESS & INNER WELLBEING
             </span>
           </motion.div>
 
-          {/* Main Headline */}
+          {/* Hero Main Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 35 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.9 }}
+            transition={{ duration: 0.9, delay: 0.25 }}
+            className="font-serif"
             style={{
-              fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
-              fontSize: 'clamp(40px, 5.5vw, 68px)',
+              fontSize: 'clamp(42px, 5.8vw, 76px)',
+              lineHeight: 1.1,
               color: '#F5F1E8',
-              lineHeight: 1.12,
               fontWeight: 500,
               marginBottom: '24px',
-              textShadow: '0 4px 30px rgba(0,0,0,0.85)',
-              letterSpacing: '-0.5px'
+              letterSpacing: '-0.5px',
+              textShadow: '0 4px 25px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)'
             }}
           >
-            A Space to Pause.{' '}
-            <span 
-              style={{ 
-                fontFamily: "'Cormorant Garamond', serif",
-                fontStyle: 'normal',
-                color: '#B8956A', 
-                display: 'block', 
-                fontSize: '1.02em', 
-                fontWeight: 600, 
-                letterSpacing: '1px',
-                marginTop: '4px',
-                textShadow: '0 4px 25px rgba(184, 149, 106, 0.5), 0 2px 15px rgba(0,0,0,0.9)'
-              }}
-            >
+            A Space to Pause.<br />
+            <span style={{ color: '#D4B892', fontStyle: 'italic', fontWeight: 400 }}>
               Reflect. Reconnect.
             </span>
           </motion.h1>
 
-          {/* Body Description Text (Clean, no black box container) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+          {/* Subtitle / Paragraph */}
+          <motion.p
+            initial={{ opacity: 0, y: 35 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            transition={{ duration: 0.9, delay: 0.4 }}
             style={{
+              fontSize: 'clamp(16px, 1.8vw, 19px)',
+              lineHeight: 1.8,
+              color: 'rgba(245, 241, 232, 0.95)',
+              marginBottom: '40px',
               maxWidth: '680px',
-              marginBottom: '40px'
+              fontWeight: 400,
+              textShadow: '0 2px 10px rgba(0,0,0,0.85)'
             }}
           >
-            <p
-              style={{
-                fontSize: '17px',
-                color: 'rgba(245, 241, 232, 0.95)',
-                lineHeight: 1.8,
-                marginBottom: '16px',
-                textShadow: '0 2px 14px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0,0,0,0.9)'
-              }}
-            >
-              At Aavira, we create a safe, compassionate and non-judgemental space to help you slow down, understand yourself and explore meaningful ways forward.
-            </p>
-            <p
-              style={{
-                fontSize: '16px',
-                color: '#D4B892',
-                lineHeight: 1.75,
-                margin: 0,
-                textShadow: '0 2px 14px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0,0,0,0.9)'
-              }}
-            >
+            At Aavira, we create a safe, compassionate and non-judgemental space to help you slow down, understand yourself and explore meaningful ways forward.
+            <br />
+            <span style={{ display: 'block', marginTop: '12px', color: 'rgba(245, 241, 232, 0.85)' }}>
               Through an integrated approach to psychological wellbeing, mind-body balance and personal development, we support you in reconnecting with yourself and moving towards greater awareness and wellbeing.
-            </p>
-          </motion.div>
+            </span>
+          </motion.p>
 
-          {/* Dual Action CTA Buttons */}
+          {/* Action Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}
+            transition={{ duration: 0.9, delay: 0.55 }}
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '18px',
+              alignItems: 'center'
+            }}
           >
-            <motion.button 
-              onClick={onOpenBooking} 
-              whileHover={{ scale: 1.04, boxShadow: '0 15px 35px rgba(184, 149, 106, 0.45)' }}
+            {/* Primary Action Button */}
+            <motion.button
+              whileHover={{ scale: 1.03, boxShadow: '0 10px 30px rgba(184, 149, 106, 0.4)' }}
               whileTap={{ scale: 0.97 }}
+              onClick={onOpenBooking}
+              className="btn-bronze"
               style={{
-                background: 'linear-gradient(135deg, #C5A075 0%, #B8956A 50%, #9E7B52 100%)',
-                color: '#161D17',
-                padding: '18px 36px',
-                borderRadius: '4px',
-                border: '1px solid #E2CAAA',
-                fontSize: '13px',
-                fontWeight: 700,
+                padding: '18px 38px',
+                fontSize: '12px',
                 letterSpacing: '2.5px',
-                textTransform: 'uppercase',
-                cursor: 'pointer',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '12px',
-                boxShadow: '0 12px 30px rgba(184, 149, 106, 0.35), inset 0 1px 0 rgba(255,255,255,0.4)',
-                transition: 'all 0.3s ease'
+                gap: '12px'
               }}
             >
-              <Calendar style={{ width: '18px', height: '18px' }} />
+              <Calendar style={{ width: '16px', height: '16px' }} />
               <span>BOOK A CONSULTATION</span>
-              <ArrowRight style={{ width: '16px', height: '16px', marginLeft: '4px' }} />
+              <ArrowRight style={{ width: '15px', height: '15px' }} />
             </motion.button>
 
-            <motion.button 
-              onClick={onExploreServices} 
-              whileHover={{ scale: 1.04, backgroundColor: 'rgba(184, 149, 106, 0.2)', borderColor: '#B8956A' }}
+            {/* Secondary Action Button */}
+            <motion.button
+              whileHover={{ scale: 1.03, backgroundColor: 'rgba(245, 241, 232, 0.12)' }}
               whileTap={{ scale: 0.97 }}
+              onClick={onExploreServices}
+              className="btn-outline"
               style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                backdropFilter: 'blur(10px)',
-                color: '#F5F1E8',
-                padding: '18px 36px',
-                borderRadius: '4px',
-                border: '1px solid rgba(184, 149, 106, 0.6)',
-                fontSize: '13px',
-                fontWeight: 600,
+                padding: '18px 38px',
+                fontSize: '12px',
                 letterSpacing: '2.5px',
-                textTransform: 'uppercase',
-                cursor: 'pointer',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '12px',
-                boxShadow: '0 10px 25px rgba(0,0,0,0.3)',
-                transition: 'all 0.3s ease'
+                borderColor: 'rgba(245, 241, 232, 0.6)'
               }}
             >
-              <Compass style={{ width: '18px', height: '18px', color: '#B8956A' }} />
+              <Compass style={{ width: '16px', height: '16px' }} />
               <span>EXPLORE OUR SERVICES</span>
             </motion.button>
           </motion.div>
-        </motion.div>
+
+        </div>
       </motion.div>
 
-      {/* Scroll Down Indicator */}
+      {/* Floating Scroll Indicator */}
       <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 1 }}
         style={{
           position: 'absolute',
-          bottom: '24px',
+          bottom: '30px',
           left: '50%',
           transform: 'translateX(-50%)',
           zIndex: 10,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '6px',
-          cursor: 'pointer',
-          opacity: 0.8
+          gap: '8px',
+          cursor: 'pointer'
         }}
         onClick={onExploreServices}
       >
-        <span style={{ fontSize: '10px', letterSpacing: '2px', color: '#D4B892', textTransform: 'uppercase' }}>
-          SCROLL
+        <span style={{ fontSize: '10px', letterSpacing: '3px', color: '#D4B892', textTransform: 'uppercase', fontWeight: 600 }}>
+          SCROLL TO EXPLORE
         </span>
-        <div style={{ width: '1px', height: '24px', backgroundColor: '#B8956A' }} />
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+          style={{
+            width: '20px',
+            height: '32px',
+            borderRadius: '12px',
+            border: '1.5px solid rgba(184, 149, 106, 0.6)',
+            display: 'flex',
+            justifyContent: 'center',
+            paddingTop: '6px'
+          }}
+        >
+          <div style={{ width: '3px', height: '6px', borderRadius: '2px', backgroundColor: '#B8956A' }} />
+        </motion.div>
       </motion.div>
+
+      {/* Responsive Inline Styles for Left Alignment */}
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-container-left {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+          }
+        }
+      `}</style>
+
     </section>
   );
 };
