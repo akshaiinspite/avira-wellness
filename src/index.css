@@ -275,10 +275,16 @@ h1, h2, h3, h4 {
 /* Tablets & Small Laptops (max-width: 992px) */
 @media (max-width: 992px) {
   .container {
-    padding: 0 20px;
+    padding: 0 24px;
   }
   .section-padding {
     padding: 70px 0;
+  }
+  .responsive-card-padding {
+    padding: 32px 24px !important;
+  }
+  .responsive-img-height {
+    height: 360px !important;
   }
 }
 
@@ -288,44 +294,69 @@ h1, h2, h3, h4 {
     padding: 0 18px;
   }
   .section-padding {
-    padding: 55px 0;
+    padding: 50px 0;
   }
+  
+  /* Buttons expand on tablet/mobile for easy touch targets */
   .btn-bronze, .btn-outline {
     width: 100%;
-    padding: 15px 24px;
-    font-size: 12px;
+    padding: 14px 20px;
+    font-size: 11.5px;
+    letter-spacing: 1.5px;
+    justify-content: center;
   }
+
   .arch-frame {
     border-radius: 120px 120px 0 0;
+  }
+
+  .responsive-card-padding {
+    padding: 24px 18px !important;
+  }
+
+  .responsive-img-height {
+    height: 280px !important;
+  }
+
+  /* Prevent grid overflow on tablets & phones */
+  .responsive-grid-auto {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
   }
 }
 
 /* Mobile Devices (max-width: 576px) */
 @media (max-width: 576px) {
   .container {
-    padding: 0 16px;
+    padding: 0 14px;
   }
   .section-padding {
-    padding: 45px 0;
+    padding: 40px 0;
   }
   h1 {
-    font-size: 32px !important;
+    font-size: 30px !important;
     line-height: 1.2 !important;
   }
   h2 {
-    font-size: 26px !important;
+    font-size: 24px !important;
     line-height: 1.25 !important;
   }
   h3 {
-    font-size: 22px !important;
+    font-size: 20px !important;
   }
   p {
     font-size: 14.5px !important;
     line-height: 1.65 !important;
   }
   .btn-bronze, .btn-outline {
-    padding: 14px 20px;
+    padding: 13px 18px;
     font-size: 11px;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
+  }
+  .responsive-card-padding {
+    padding: 20px 14px !important;
+  }
+  .responsive-img-height {
+    height: 240px !important;
   }
 }

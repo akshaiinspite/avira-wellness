@@ -1,19 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Sparkles, Calendar, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface DayWithThyselfProps {
   onOpenBooking: (serviceName?: string) => void;
 }
 
 export const DayWithThyself: React.FC<DayWithThyselfProps> = ({ onOpenBooking }) => {
+  const { t } = useLanguage();
+
   const suitabilityPoints = [
-    'Feeling emotionally overwhelmed',
-    'Mentally exhausted',
-    'Feeling stuck in repetitive patterns',
-    'Experiencing a sense of disconnection from yourself',
-    'Seeking meaningful personal time and reflection',
-    'Looking to reconnect with your inner resources'
+    t('day_point1'),
+    t('day_point2'),
+    t('day_point3'),
+    t('day_point4'),
+    t('day_point5'),
+    t('day_point6')
   ];
 
   return (
@@ -58,7 +61,7 @@ export const DayWithThyself: React.FC<DayWithThyselfProps> = ({ onOpenBooking })
               marginBottom: '10px'
             }}
           >
-            FEATURED EXPERIENCE
+            {t('day_tag')}
           </span>
           <h2
             className="font-serif"
@@ -69,7 +72,7 @@ export const DayWithThyself: React.FC<DayWithThyselfProps> = ({ onOpenBooking })
               marginBottom: '12px'
             }}
           >
-            A Day With Thyself
+            {t('day_title')}
           </h2>
           <p 
             className="font-serif"
@@ -81,11 +84,11 @@ export const DayWithThyself: React.FC<DayWithThyselfProps> = ({ onOpenBooking })
               fontWeight: 400
             }}
           >
-            One day. One space. One deeper connection with yourself.
+            {t('day_sub')}
           </p>
           <div className="gold-line" style={{ width: '80px', margin: '0 auto 24px auto' }} />
           <p style={{ fontSize: '17px', color: 'rgba(245, 241, 232, 0.9)', lineHeight: 1.8 }}>
-            A personalised one-to-one wellness experience designed to give you dedicated time and space to pause, reconnect, release and renew.
+            {t('day_desc')}
           </p>
         </motion.div>
 
@@ -155,10 +158,10 @@ export const DayWithThyself: React.FC<DayWithThyselfProps> = ({ onOpenBooking })
               <Sparkles style={{ width: '22px', height: '22px', color: '#B8956A' }} />
               <div>
                 <span style={{ fontSize: '10px', letterSpacing: '2px', color: '#B8956A', textTransform: 'uppercase', display: 'block', fontWeight: 600 }}>
-                  ONE-TO-ONE RETREAT
+                  {t('day_retreat_tag')}
                 </span>
                 <span style={{ fontSize: '14px', color: '#F5F1E8', fontWeight: 600 }}>
-                  Fully Tailored Sanctuary
+                  {t('day_retreat_sub')}
                 </span>
               </div>
             </div>
@@ -183,15 +186,15 @@ export const DayWithThyself: React.FC<DayWithThyselfProps> = ({ onOpenBooking })
               }}
             >
               <h3 className="font-serif" style={{ fontSize: '28px', color: '#F5F1E8', marginBottom: '18px', fontWeight: 600 }}>
-                An Immersive One-to-One Sanctuary
+                {t('day_sec_title')}
               </h3>
 
               <p style={{ fontSize: '15.5px', color: 'rgba(245, 241, 232, 0.9)', lineHeight: 1.85, marginBottom: '16px' }}>
-                <strong>A Day With Thyself</strong> is an immersive experience where you spend a dedicated day with the therapist in a safe, supportive and peaceful environment.
+                {t('day_sec_p1')}
               </p>
 
               <p style={{ fontSize: '15px', color: 'rgba(245, 241, 232, 0.85)', lineHeight: 1.8, marginBottom: '24px' }}>
-                The day is thoughtfully designed around your emotional, mental, energetic and overall wellbeing needs. Depending on your goals and comfort, the experience may bring together counselling and psychological guidance, self-exploration, acupuncture, Access Bars®, clinical hypnotherapy, relaxation and breathwork, guided meditation, mindfulness and other awareness practices.
+                {t('day_sec_p2')}
               </p>
 
               <div 
@@ -204,13 +207,13 @@ export const DayWithThyself: React.FC<DayWithThyselfProps> = ({ onOpenBooking })
                 }}
               >
                 <p style={{ fontSize: '13.5px', color: '#D4B892', fontStyle: 'italic', margin: 0, lineHeight: 1.6 }}>
-                  Every experience is personalised. <strong>Not every modality is necessarily used</strong>; the day's approach is selected according to your individual needs, goals and comfort.
+                  {t('day_sec_note')}
                 </p>
               </div>
 
               {/* Suitability Points Header */}
               <h4 className="font-serif" style={{ fontSize: '20px', color: '#F5F1E8', marginBottom: '16px', fontWeight: 600 }}>
-                This may be a space for you if you are:
+                {t('day_sec_if')}
               </h4>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', marginBottom: '28px' }}>
@@ -225,12 +228,12 @@ export const DayWithThyself: React.FC<DayWithThyselfProps> = ({ onOpenBooking })
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                onClick={() => onOpenBooking('A Day With Thyself')}
+                onClick={() => onOpenBooking(t('day_title'))}
                 className="btn-bronze"
                 style={{ width: '100%', padding: '16px', fontSize: '13px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
               >
                 <Calendar style={{ width: '18px', height: '18px' }} />
-                <span>DISCOVER A DAY WITH THYSELF</span>
+                <span>{t('day_btn')}</span>
                 <ArrowRight style={{ width: '16px', height: '16px' }} />
               </motion.button>
             </div>
@@ -282,20 +285,20 @@ export const DayWithThyself: React.FC<DayWithThyselfProps> = ({ onOpenBooking })
               letterSpacing: '0.5px'
             }}
           >
-            An invitation to pause.
+            {t('day_inv_title')}
           </h4>
 
           <div className="gold-line" style={{ width: '60px', margin: '0 auto 20px auto' }} />
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
             <p className="font-serif" style={{ fontSize: 'clamp(19px, 2.2vw, 24px)', color: '#F5F1E8', fontStyle: 'italic', margin: 0, lineHeight: 1.6 }}>
-              To listen to yourself.
+              {t('day_inv_l1')}
             </p>
             <p className="font-serif" style={{ fontSize: 'clamp(19px, 2.2vw, 24px)', color: '#F5F1E8', fontStyle: 'italic', margin: 0, lineHeight: 1.6 }}>
-              To understand yourself.
+              {t('day_inv_l2')}
             </p>
             <p className="font-serif" style={{ fontSize: 'clamp(19px, 2.2vw, 24px)', color: '#F5F1E8', fontStyle: 'italic', margin: 0, lineHeight: 1.6 }}>
-              To reconnect with yourself.
+              {t('day_inv_l3')}
             </p>
           </div>
 
@@ -319,7 +322,7 @@ export const DayWithThyself: React.FC<DayWithThyselfProps> = ({ onOpenBooking })
                 letterSpacing: '0.3px'
               }}
             >
-              And to gently move towards a better version of you.
+              {t('day_inv_final')}
             </p>
           </div>
         </motion.div>

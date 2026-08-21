@@ -1,11 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 interface WelcomeSectionProps {
   onOpenBooking: () => void;
 }
 
 export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenBooking }) => {
+  const { t } = useLanguage();
+
   return (
     <section
       id="about"
@@ -32,7 +35,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenBooking })
 
       <div className="container" style={{ position: 'relative', zIndex: 10 }}>
         
-        {/* Top Header & Intro (Clean layout - Black square box removed) */}
+        {/* Top Header & Intro */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -56,37 +59,23 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenBooking })
               textShadow: '0 2px 10px rgba(0,0,0,0.8)'
             }}
           >
-            WELCOME TO AAVIRA
+            {t('welcome_tag')}
           </span>
 
           <h2
             className="font-serif"
             style={{
-              fontSize: 'clamp(34px, 4.5vw, 56px)',
+              fontSize: 'clamp(32px, 4.2vw, 54px)',
               color: '#F5F1E8',
               fontWeight: 500,
               marginBottom: '20px',
               textShadow: '0 4px 20px rgba(0,0,0,0.85)'
             }}
           >
-            Your Journey Inward Begins Here
+            {t('welcome_title')}
           </h2>
 
           <div className="gold-line" style={{ width: '80px', margin: '0 auto 24px auto' }} />
-
-          <p 
-            className="font-serif" 
-            style={{ 
-              fontSize: 'clamp(20px, 2.3vw, 25px)', 
-              color: '#D4B892', 
-              fontStyle: 'italic', 
-              marginBottom: '24px', 
-              fontWeight: 400,
-              textShadow: '0 2px 12px rgba(0,0,0,0.9)'
-            }}
-          >
-            Life can often leave little space to pause and truly listen to ourselves.
-          </p>
 
           <p 
             style={{ 
@@ -97,7 +86,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenBooking })
               textShadow: '0 2px 12px rgba(0,0,0,0.9)'
             }}
           >
-            Aavira offers a dedicated space for reflection, self-awareness and personal wellbeing. Founded by <strong style={{ color: '#B8956A', fontWeight: 600 }}>Afeefa M. P.</strong>, Aavira brings together counselling psychology and complementary wellness practices to support the individual as a whole.
+            {t('welcome_desc1')}
           </p>
 
           <p 
@@ -105,43 +94,44 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenBooking })
               fontSize: '16.5px', 
               color: 'rgba(245, 241, 232, 0.88)', 
               lineHeight: 1.8, 
-              marginBottom: '36px',
+              marginBottom: '32px',
               textShadow: '0 2px 12px rgba(0,0,0,0.9)'
             }}
           >
-            Whether you are navigating emotional challenges, feeling mentally exhausted, seeking greater self-awareness, or simply looking for meaningful time with yourself, our approach begins with understanding where you are.
+            {t('welcome_desc2')}
           </p>
 
-          {/* Motto Box */}
           <div
             style={{
-              backgroundColor: 'rgba(184, 149, 106, 0.14)',
-              border: '1px solid rgba(184, 149, 106, 0.4)',
-              padding: '20px 36px',
-              borderRadius: '4px',
+              backgroundColor: 'rgba(184, 149, 106, 0.16)',
+              border: '1px solid rgba(184, 149, 106, 0.45)',
+              backdropFilter: 'blur(10px)',
+              padding: '16px 32px',
+              borderRadius: '6px',
               display: 'inline-block',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.3)'
+              boxShadow: '0 12px 30px rgba(0,0,0,0.3)'
             }}
           >
-            <span 
+            <span
               className="font-serif"
-              style={{ 
-                fontSize: 'clamp(20px, 2.5vw, 26px)', 
-                color: '#B8956A', 
-                fontWeight: 600, 
-                letterSpacing: '2px' 
+              style={{
+                fontSize: 'clamp(17px, 2vw, 22px)',
+                color: '#B8956A',
+                fontWeight: 600,
+                letterSpacing: '2.5px'
               }}
             >
-              Pause. Listen. Understand. Reconnect.
+              {t('welcome_badge')}
             </span>
           </div>
         </motion.div>
 
         {/* Founder Feature Block: MEET AFEEFA M. P. */}
         <div
+          className="responsive-card-padding responsive-grid-auto"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '50px',
             alignItems: 'center',
             backgroundColor: 'rgba(22, 30, 23, 0.75)',
@@ -170,14 +160,15 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenBooking })
               }}
             >
               <img
-                src="/images/afeefa_founder.png"
-                alt="Afeefa M. P. - Founder of Aavira Wellness"
+                src="/images/kerala_banyan_sanctuary.png"
+                alt="Kerala style traditional Banyan Tree Wellness Sanctuary - Afeefa Founder at Aavira"
+                className="responsive-img-height"
                 style={{
                   width: '100%',
                   height: '480px',
                   objectFit: 'cover',
-                  objectPosition: 'top center',
-                  filter: 'brightness(0.95) contrast(1.02)'
+                  objectPosition: 'center',
+                  filter: 'brightness(0.96) contrast(1.02)'
                 }}
               />
               <div
@@ -222,7 +213,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenBooking })
                 marginBottom: '8px'
               }}
             >
-              MEET AFEEFA M. P.
+              {t('founder1_tag')}
             </span>
 
             <h3
@@ -234,7 +225,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenBooking })
                 marginBottom: '6px'
               }}
             >
-              Founder & Wellness Practitioner at Aavira
+              {t('founder1_title')}
             </h3>
 
             {/* Credentials Tag */}
@@ -250,19 +241,19 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenBooking })
                 paddingBottom: '16px'
               }}
             >
-              Counselling Psychologist | Clinical Hypnotherapist | Acupuncture Therapist | Access Bars® Practitioner | Family Constellation Facilitator | Trainer
+              {t('founder1_creds')}
             </p>
 
             <p style={{ fontSize: '15.5px', color: 'rgba(245, 241, 232, 0.88)', lineHeight: 1.8, marginBottom: '16px' }}>
-              Afeefa M. P. is a Counselling Psychologist and integrative wellness practitioner working across psychological wellbeing, mind-body balance, hypnotherapy and personal development.
+              {t('founder1_p1')}
             </p>
 
             <p style={{ fontSize: '15.5px', color: 'rgba(245, 241, 232, 0.88)', lineHeight: 1.8, marginBottom: '16px' }}>
-              Her approach is centred on creating a safe, compassionate and non-judgemental space where individuals can pause, reflect, understand themselves and explore meaningful ways forward.
+              {t('founder1_p2')}
             </p>
 
             <p style={{ fontSize: '15px', color: 'rgba(245, 241, 232, 0.82)', lineHeight: 1.8, marginBottom: '28px' }}>
-              With training and practice across counselling psychology, clinical hypnotherapy, acupuncture, Access Bars®, Family Constellation facilitation and professional training, Afeefa brings together complementary approaches according to each individual's needs, comfort and goals.
+              {t('founder1_p3')}
             </p>
 
             <button
@@ -270,7 +261,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenBooking })
               className="btn-bronze"
               style={{ padding: '16px 36px' }}
             >
-              DISCOVER AFEEFA'S APPROACH
+              {t('founder1_btn')}
             </button>
           </motion.div>
 

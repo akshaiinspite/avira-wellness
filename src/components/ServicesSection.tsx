@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, X, CheckCircle2, Sparkles } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ServicesSectionProps {
   onOpenBooking: (serviceName?: string) => void;
@@ -8,13 +9,13 @@ interface ServicesSectionProps {
 
 interface ServiceItem {
   id: string;
-  title: string;
-  category: string;
+  titleKey: string;
+  categoryKey: string;
   image: string;
-  shortDesc: string;
-  fullDesc: string;
-  linkText: string;
-  benefits: string[];
+  shortDescKey: string;
+  fullDescKey: string;
+  linkTextKey: string;
+  benefitsKey: string;
 }
 
 interface TiltCardProps {
@@ -25,6 +26,7 @@ interface TiltCardProps {
 
 // GSAP-style 3D Tilt Card Component with Interactive Radial Spotlight
 const TiltCard: React.FC<TiltCardProps> = ({ service, index, onSelect }) => {
+  const { t } = useLanguage();
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
@@ -37,7 +39,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ service, index, onSelect }) => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Calculate tilt angles relative to center (-8deg to 8deg)
+    // Calculate tilt angles relative to center (-7deg to 7deg)
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     const rX = -((y - centerY) / centerY) * 7;
@@ -57,6 +59,11 @@ const TiltCard: React.FC<TiltCardProps> = ({ service, index, onSelect }) => {
     setRotateX(0);
     setRotateY(0);
   };
+
+  const title = t(service.titleKey);
+  const category = t(service.categoryKey);
+  const shortDesc = t(service.shortDescKey);
+  const linkText = t(service.linkTextKey);
 
   return (
     <motion.div
@@ -106,7 +113,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ service, index, onSelect }) => {
         <div style={{ width: '100%', height: '210px', overflow: 'hidden', position: 'relative' }}>
           <img
             src={service.image}
-            alt={service.title}
+            alt={title}
             style={{
               width: '100%',
               height: '100%',
@@ -158,7 +165,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ service, index, onSelect }) => {
               marginBottom: '10px'
             }}
           >
-            {service.category}
+            {category}
           </span>
 
           {/* Service Title */}
@@ -172,12 +179,12 @@ const TiltCard: React.FC<TiltCardProps> = ({ service, index, onSelect }) => {
               transition: 'color 0.3s ease'
             }}
           >
-            {service.title}
+            {title}
           </h3>
 
           {/* Short Description */}
           <p style={{ fontSize: '15px', color: '#4A3F35', lineHeight: 1.7, margin: 0 }}>
-            {service.shortDesc}
+            {shortDesc}
           </p>
         </div>
       </div>
@@ -202,7 +209,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ service, index, onSelect }) => {
             letterSpacing: '0.5px'
           }}
         >
-          {service.linkText} →
+          {linkText} →
         </span>
         <motion.div
           animate={{ x: isHovered ? 4 : 0 }}
@@ -216,98 +223,69 @@ const TiltCard: React.FC<TiltCardProps> = ({ service, index, onSelect }) => {
 };
 
 export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenBooking }) => {
+  const { t } = useLanguage();
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
 
   const services: ServiceItem[] = [
     {
       id: 'counselling',
-      title: 'Counselling Psychology',
-      category: 'Psychological Support',
+      titleKey: 'service_counselling_title',
+      categoryKey: 'service_counselling_cat',
       image: '/images/service_counselling.png',
-      shortDesc: 'A safe and supportive space to explore thoughts, emotions, relationships and personal experiences, helping you develop greater clarity, self-awareness and understanding.',
-      fullDesc: 'Counselling Psychology at Aavira provides a compassionate, non-judgmental space where you can explore thoughts, emotions, and behavioral patterns. Through tailored therapeutic approaches, we support you in overcoming stress, anxiety, relationship issues, and identity journeys.',
-      linkText: 'Explore Counselling',
-      benefits: [
-        'Safe and confidential emotional expression',
-        'Coping mechanisms for stress & anxiety',
-        'Enhanced self-esteem & boundary setting',
-        'Clarity during major life changes'
-      ]
+      shortDescKey: 'service_counselling_desc',
+      fullDescKey: 'service_counselling_full',
+      linkTextKey: 'service_counselling_link',
+      benefitsKey: 'service_counselling_bullets'
     },
     {
       id: 'hypnotherapy',
-      title: 'Clinical Hypnotherapy',
-      category: 'Subconscious Transformation',
+      titleKey: 'service_hypno_title',
+      categoryKey: 'service_hypno_cat',
       image: '/images/service_hypnotherapy.png',
-      shortDesc: 'A guided process of relaxation and focused attention that creates space to explore thoughts, emotions and behavioural patterns, supporting greater self-awareness and positive change.',
-      fullDesc: 'Clinical Hypnotherapy utilizes gentle, guided relaxation techniques to quiet the conscious mind and engage the subconscious. This allows us to reframe subconscious triggers, heal emotional wounds, and cultivate empowering self-beliefs.',
-      linkText: 'Explore Hypnotherapy',
-      benefits: [
-        'Release of deep subconscious blockages',
-        'Stress reduction & sleep improvement',
-        'Overcoming fears and phobias',
-        'Building lasting positive habits'
-      ]
+      shortDescKey: 'service_hypno_desc',
+      fullDescKey: 'service_hypno_full',
+      linkTextKey: 'service_hypno_link',
+      benefitsKey: 'service_hypno_bullets'
     },
     {
       id: 'acupuncture',
-      title: 'Acupuncture',
-      category: 'Somatic & Energy Balance',
+      titleKey: 'service_acu_title',
+      categoryKey: 'service_acu_cat',
       image: '/images/service_acupuncture.png',
-      shortDesc: 'A traditional complementary wellness practice using fine needles at specific points of the body, traditionally intended to support balance and overall wellbeing.',
-      fullDesc: 'Acupuncture is a traditional complementary healing practice designed to harmonize Qi (vital energy flow) within the body. By stimulating precise meridian points, acupuncture releases tension, reduces physical discomfort, and activates natural self-healing mechanisms.',
-      linkText: 'Explore Acupuncture',
-      benefits: [
-        'Relief from chronic physical tension',
-        'Balanced nervous system & relaxation',
-        'Hormonal & energetic alignment',
-        'Improved vital stamina and sleep'
-      ]
+      shortDescKey: 'service_acu_desc',
+      fullDescKey: 'service_acu_full',
+      linkTextKey: 'service_acu_link',
+      benefitsKey: 'service_acu_bullets'
     },
     {
       id: 'accessbars',
-      title: 'Access Bars®',
-      category: 'Energetic Mental Decluttering',
+      titleKey: 'service_access_title',
+      categoryKey: 'service_access_cat',
       image: '/images/service_accessbars.png',
-      shortDesc: 'A gentle, touch-based complementary wellness practice involving light touch to specific points on the head. Sessions are designed to encourage deep relaxation, quiet reflection and a sense of mental ease.',
-      fullDesc: 'Access Bars® involves softly touching 32 unique points on your head that correspond to different areas of life (healing, calm, control, creativity). This process discharges the electrical charge of thoughts, judgments, and stresses stored in your brain.',
-      linkText: 'Explore Access Bars®',
-      benefits: [
-        'Deep mental stillness & relaxation',
-        'Dissolution of chronic mental noise',
-        'Greater ease, joy, and emotional space',
-        'Release of rigid limiting beliefs'
-      ]
+      shortDescKey: 'service_access_desc',
+      fullDescKey: 'service_access_full',
+      linkTextKey: 'service_access_link',
+      benefitsKey: 'service_access_bullets'
     },
     {
       id: 'familyconstellation',
-      title: 'Family Constellation',
-      category: 'Systemic & Ancestral Healing',
+      titleKey: 'service_const_title',
+      categoryKey: 'service_const_cat',
       image: '/images/service_familyconstellation.png',
-      shortDesc: 'A facilitated self-exploration approach that helps individuals reflect on family relationships, experiences and recurring relational patterns, offering new perspectives and greater self-awareness.',
-      fullDesc: 'Family Constellation therapy explores how unresolved trauma and unseen dynamics within previous generations impact your present life. By bringing hidden systemic loyalties to light, you can step out of inherited burdens into your own authentic strength.',
-      linkText: 'Explore Family Constellation',
-      benefits: [
-        'Resolution of recurring generational patterns',
-        'Clarity in complex family relationships',
-        'Deep emotional release & reconciliation',
-        'Restoration of natural order and peace'
-      ]
+      shortDescKey: 'service_const_desc',
+      fullDescKey: 'service_const_full',
+      linkTextKey: 'service_const_link',
+      benefitsKey: 'service_const_bullets'
     },
     {
       id: 'facilitation',
-      title: 'Training & Facilitation',
-      category: 'Personal Development',
+      titleKey: 'service_train_title',
+      categoryKey: 'service_train_cat',
       image: '/images/service_training.png',
-      shortDesc: 'Professional learning and facilitation experiences designed around awareness, wellbeing, personal development and meaningful growth.',
-      fullDesc: 'Aavira offers custom-designed workshops and group facilitation programs for organizations, educational institutions, and community groups. Topics include Emotional Intelligence, Stress Mastery, Mindful Leadership, and Team Alignment.',
-      linkText: 'Explore Training',
-      benefits: [
-        'Customized corporate & group modules',
-        'Actionable stress-resilience strategies',
-        'Enhanced empathy and team synergy',
-        'Experiential learning & reflection'
-      ]
+      shortDescKey: 'service_train_desc',
+      fullDescKey: 'service_train_full',
+      linkTextKey: 'service_train_link',
+      benefitsKey: 'service_train_bullets'
     }
   ];
 
@@ -343,7 +321,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenBooking 
               marginBottom: '10px'
             }}
           >
-            OUR SERVICES
+            {t('services_tag')}
           </span>
           <h2
             className="font-serif"
@@ -354,11 +332,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenBooking 
               marginBottom: '16px'
             }}
           >
-            Approaches Designed Around You
+            {t('services_title')}
           </h2>
           <div className="gold-line" style={{ width: '80px', margin: '0 auto 20px auto' }} />
           <p style={{ fontSize: '17px', color: '#4A3F35', lineHeight: 1.7 }}>
-            At Aavira, there is no single path to wellbeing. Different practices may be explored according to your individual needs, goals and comfort.
+            {t('services_sub')}
           </p>
         </motion.div>
 
@@ -389,7 +367,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenBooking 
             className="btn-bronze"
             style={{ padding: '18px 40px' }}
           >
-            DISCOVER ALL WELLBEING PROGRAMS
+            {t('services_btn_all')}
           </motion.button>
         </div>
 
@@ -457,7 +435,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenBooking 
               <div style={{ width: '100%', height: '220px', overflow: 'hidden', position: 'relative' }}>
                 <img
                   src={selectedService.image}
-                  alt={selectedService.title}
+                  alt={t(selectedService.titleKey)}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
                 <div
@@ -473,28 +451,28 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenBooking 
                 {/* Service Header */}
                 <div style={{ marginBottom: '20px' }}>
                   <span style={{ fontSize: '11px', color: '#B8956A', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600 }}>
-                    {selectedService.category}
+                    {t(selectedService.categoryKey)}
                   </span>
                   <h3 className="font-serif" style={{ fontSize: '32px', color: '#2B372C', fontWeight: 600, marginTop: '4px' }}>
-                    {selectedService.title}
+                    {t(selectedService.titleKey)}
                   </h3>
                 </div>
 
                 <div className="gold-line" style={{ marginBottom: '24px' }} />
 
                 <p style={{ fontSize: '16px', color: '#4A3F35', lineHeight: 1.8, marginBottom: '28px' }}>
-                  {selectedService.fullDesc}
+                  {t(selectedService.fullDescKey)}
                 </p>
 
                 <h4 className="font-serif" style={{ fontSize: '20px', color: '#2B372C', marginBottom: '16px' }}>
-                  Key Benefits & Outcomes:
+                  {t('services_modal_benefits')}
                 </h4>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '36px' }}>
-                  {selectedService.benefits.map((benefit, i) => (
+                  {t(selectedService.benefitsKey).split(',').map((benefit, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                       <CheckCircle2 style={{ width: '18px', height: '18px', color: '#B8956A', flexShrink: 0 }} />
-                      <span style={{ fontSize: '15px', color: '#383838' }}>{benefit}</span>
+                      <span style={{ fontSize: '15px', color: '#383838' }}>{benefit.trim()}</span>
                     </div>
                   ))}
                 </div>
@@ -503,14 +481,14 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenBooking 
                 <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
                   <button
                     onClick={() => {
-                      const title = selectedService.title;
+                      const title = t(selectedService.titleKey);
                       setSelectedService(null);
                       onOpenBooking(title);
                     }}
                     className="btn-bronze"
                     style={{ width: '100%', padding: '16px' }}
                   >
-                    BOOK THIS SESSION
+                    {t('services_modal_book')}
                   </button>
                 </div>
               </div>

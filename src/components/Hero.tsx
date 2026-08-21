@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Calendar, Compass, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -8,6 +9,7 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onExploreServices }) => {
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -64,7 +66,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onExploreServices }) 
         </video>
       </motion.div>
 
-      {/* Light Overlay Gradient (Keeps left text readable while revealing bright video) */}
+      {/* Light Overlay Gradient */}
       <div
         style={{
           position: 'absolute',
@@ -129,7 +131,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onExploreServices }) 
                 textTransform: 'uppercase'
               }}
             >
-              INTEGRATIVE WELLNESS & INNER WELLBEING
+              {t('hero_tag')}
             </span>
           </motion.div>
 
@@ -140,8 +142,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onExploreServices }) 
             transition={{ duration: 0.9, delay: 0.25 }}
             className="font-serif"
             style={{
-              fontSize: 'clamp(42px, 5.8vw, 76px)',
-              lineHeight: 1.1,
+              fontSize: 'clamp(36px, 5.2vw, 68px)',
+              lineHeight: 1.15,
               color: '#F5F1E8',
               fontWeight: 500,
               marginBottom: '24px',
@@ -149,10 +151,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onExploreServices }) 
               textShadow: '0 4px 25px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)'
             }}
           >
-            A Space to Pause.<br />
-            <span style={{ color: '#D4B892', fontStyle: 'italic', fontWeight: 400 }}>
-              Reflect. Reconnect.
-            </span>
+            {t('hero_headline')}
           </motion.h1>
 
           {/* Subtitle / Paragraph */}
@@ -170,11 +169,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onExploreServices }) 
               textShadow: '0 2px 10px rgba(0,0,0,0.85)'
             }}
           >
-            At Aavira, we create a safe, compassionate and non-judgemental space to help you slow down, understand yourself and explore meaningful ways forward.
-            <br />
-            <span style={{ display: 'block', marginTop: '12px', color: 'rgba(245, 241, 232, 0.85)' }}>
-              Through an integrated approach to psychological wellbeing, mind-body balance and personal development, we support you in reconnecting with yourself and moving towards greater awareness and wellbeing.
-            </span>
+            {t('hero_subtitle')}
           </motion.p>
 
           {/* Action Buttons */}
@@ -205,7 +200,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onExploreServices }) 
               }}
             >
               <Calendar style={{ width: '16px', height: '16px' }} />
-              <span>BOOK A CONSULTATION</span>
+              <span>{t('hero_btn_book')}</span>
               <ArrowRight style={{ width: '15px', height: '15px' }} />
             </motion.button>
 
@@ -226,7 +221,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onExploreServices }) 
               }}
             >
               <Compass style={{ width: '16px', height: '16px' }} />
-              <span>EXPLORE OUR SERVICES</span>
+              <span>{t('hero_btn_explore')}</span>
             </motion.button>
           </motion.div>
 

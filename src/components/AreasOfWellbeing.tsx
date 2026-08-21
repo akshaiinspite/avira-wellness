@@ -9,43 +9,46 @@ import {
   Activity, 
   Sun
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export const AreasOfWellbeing: React.FC = () => {
+  const { t } = useLanguage();
+
   const areas = [
     {
-      title: 'Emotional Wellbeing',
+      title: t('area1_title'),
       icon: <Heart style={{ width: '26px', height: '26px', color: '#B8956A' }} />,
-      desc: 'Create space to understand and work through emotional experiences.'
+      desc: t('area1_desc')
     },
     {
-      title: 'Self-Awareness',
+      title: t('area2_title'),
       icon: <Eye style={{ width: '26px', height: '26px', color: '#B8956A' }} />,
-      desc: 'Develop a deeper understanding of your thoughts, feelings, needs and patterns.'
+      desc: t('area2_desc')
     },
     {
-      title: 'Stress & Relaxation',
+      title: t('area3_title'),
       icon: <ShieldCheck style={{ width: '26px', height: '26px', color: '#B8956A' }} />,
-      desc: 'Explore practices that encourage relaxation, reflection and healthier ways of managing stress.'
+      desc: t('area3_desc')
     },
     {
-      title: 'Personal Growth',
+      title: t('area4_title'),
       icon: <TrendingUp style={{ width: '26px', height: '26px', color: '#B8956A' }} />,
-      desc: 'Make space for learning, reflection and meaningful personal development.'
+      desc: t('area4_desc')
     },
     {
-      title: 'Relationships',
+      title: t('area5_title'),
       icon: <Users style={{ width: '26px', height: '26px', color: '#B8956A' }} />,
-      desc: 'Explore relationships, family experiences and patterns with greater clarity.'
+      desc: t('area5_desc')
     },
     {
-      title: 'Mind-Body Wellbeing',
+      title: t('area6_title'),
       icon: <Activity style={{ width: '26px', height: '26px', color: '#B8956A' }} />,
-      desc: 'Reconnect with the relationship between your inner experience and overall wellbeing.'
+      desc: t('area6_desc')
     },
     {
-      title: 'Self-Care',
+      title: t('area7_title'),
       icon: <Sun style={{ width: '26px', height: '26px', color: '#B8956A' }} />,
-      desc: 'Give yourself permission to pause, rest, reflect and reconnect.'
+      desc: t('area7_desc')
     }
   ];
 
@@ -94,7 +97,7 @@ export const AreasOfWellbeing: React.FC = () => {
               marginBottom: '10px'
             }}
           >
-            AREAS OF WELLBEING
+            {t('areas_tag')}
           </span>
           <h2
             className="font-serif"
@@ -106,11 +109,11 @@ export const AreasOfWellbeing: React.FC = () => {
               marginBottom: '16px'
             }}
           >
-            Supporting the Whole You
+            {t('areas_title')}
           </h2>
           <div className="gold-line" style={{ width: '80px', margin: '0 auto 20px auto' }} />
           <p style={{ fontSize: '16.5px', color: 'rgba(245, 241, 232, 0.88)', lineHeight: 1.7 }}>
-            Our work may support different dimensions of your personal wellbeing, including:
+            {t('areas_sub')}
           </p>
         </motion.div>
 
@@ -124,7 +127,7 @@ export const AreasOfWellbeing: React.FC = () => {
         >
           {areas.map((area, idx) => (
             <motion.div
-              key={area.title}
+              key={idx}
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}

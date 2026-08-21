@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ApproachStepsProps {
   onOpenBooking: () => void;
 }
 
 export const ApproachSteps: React.FC<ApproachStepsProps> = ({ onOpenBooking }) => {
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -17,27 +19,27 @@ export const ApproachSteps: React.FC<ApproachStepsProps> = ({ onOpenBooking }) =
   const steps = [
     {
       num: '01',
-      title: 'LISTEN',
-      subtitle: 'Be Heard & Honoured',
-      desc: 'A safe, compassionate space to be heard and acknowledged without judgement.'
+      title: t('step1_title'),
+      subtitle: t('step1_sub'),
+      desc: t('step1_desc')
     },
     {
       num: '02',
-      title: 'UNDERSTAND',
-      subtitle: 'Awareness & Insight',
-      desc: 'Explore your thoughts, emotions, experiences and patterns with greater awareness.'
+      title: t('step2_title'),
+      subtitle: t('step2_sub'),
+      desc: t('step2_desc')
     },
     {
       num: '03',
-      title: 'INTEGRATE',
-      subtitle: 'Everyday Harmony',
-      desc: 'Bring insights together and explore ways to create greater balance in everyday life.'
+      title: t('step3_title'),
+      subtitle: t('step3_sub'),
+      desc: t('step3_desc')
     },
     {
       num: '04',
-      title: 'EMPOWER',
-      subtitle: 'Self-Mastery & Growth',
-      desc: 'Move forward with greater self-awareness, confidence and a deeper connection with yourself.'
+      title: t('step4_title'),
+      subtitle: t('step4_sub'),
+      desc: t('step4_desc')
     }
   ];
 
@@ -87,7 +89,7 @@ export const ApproachSteps: React.FC<ApproachStepsProps> = ({ onOpenBooking }) =
               marginBottom: '10px'
             }}
           >
-            OUR APPROACH
+            {t('approach_tag')}
           </span>
           <h2
             className="font-serif"
@@ -98,11 +100,11 @@ export const ApproachSteps: React.FC<ApproachStepsProps> = ({ onOpenBooking }) =
               marginBottom: '16px'
             }}
           >
-            Listen. Understand. Integrate. Empower.
+            {t('approach_title')}
           </h2>
           <div className="gold-line" style={{ width: '80px', margin: '0 auto 20px auto' }} />
           <p style={{ fontSize: '17px', color: 'rgba(245, 241, 232, 0.9)', lineHeight: 1.7 }}>
-            We believe meaningful wellbeing begins by creating space to listen and understand.
+            {t('approach_sub')}
           </p>
         </motion.div>
 
@@ -230,7 +232,7 @@ export const ApproachSteps: React.FC<ApproachStepsProps> = ({ onOpenBooking }) =
             className="btn-outline"
             style={{ padding: '18px 40px' }}
           >
-            EXPLORE OUR APPROACH
+            {t('approach_btn')}
           </motion.button>
         </div>
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, Sparkles } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
   onClose,
   initialService = ''
 }) => {
+  const { t } = useLanguage();
   const [service, setService] = useState(initialService);
   const [mode, setMode] = useState('In-Person Sanctuary');
   const [name, setName] = useState('');
@@ -20,6 +22,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
   const [phone, setPhone] = useState('');
   const [date, setDate] = useState('');
   const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -30,14 +33,39 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      // Auto close after 3 seconds
-      setSubmitted(false);
-      onClose();
-    }, 3000);
+    setIsSubmitting(true);
+    
+    try {
+      await fetch('https://formsubmit.co/ajax/contact@aavirawellness.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          'Client Name': name,
+          'Email Address': email,
+          'Phone Number': phone,
+          'Selected Service': service || 'General Wellness Consultation',
+          'Session Format': mode,
+          'Preferred Date': date || 'Flexible',
+          'Client Note / Message': message || 'N/A',
+          _subject: `New Consultation Request: ${name} (${service || 'General'})`,
+          _template: 'table'
+        })
+      });
+    } catch (error) {
+      console.error('Submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        onClose();
+      }, 4000);
+    }
   };
 
   return (
@@ -113,24 +141,24 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               </div>
 
               <h3 className="font-serif" style={{ fontSize: '32px', color: '#2B372C', marginBottom: '12px' }}>
-                Consultation Requested
+                {t('modal_success_title')}
               </h3>
 
               <p style={{ fontSize: '16px', color: '#4A3F35', lineHeight: 1.7, maxWidth: '480px', margin: '0 auto' }}>
-                Thank you, <strong>{name || 'Friend'}</strong>. Afeefa and the Aavira team have received your request. We will reach out shortly via email or phone to confirm your session timing.
+                {t('modal_success_desc')}
               </p>
             </motion.div>
           ) : (
             <div>
               <div style={{ textAlign: 'center', marginBottom: '28px' }}>
                 <span className="font-script" style={{ fontSize: '36px', color: '#B8956A', display: 'block', lineHeight: 1 }}>
-                  Begin Your Healing
+                  {t('modal_begin')}
                 </span>
                 <h3 className="font-serif" style={{ fontSize: '28px', color: '#2B372C', fontWeight: 600, marginTop: '4px' }}>
-                  Book a Consultation
+                  {t('modal_title')}
                 </h3>
                 <p style={{ fontSize: '14px', color: '#4A3F35', marginTop: '6px' }}>
-                  Select your service and preferred schedule below
+                  {t('modal_sub')}
                 </p>
               </div>
 
@@ -139,7 +167,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                 {/* Service Selection */}
                 <div>
                   <label style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', color: '#3B483C', display: 'block', marginBottom: '6px' }}>
-                    Select Service / Therapy
+                    {t('modal_service_label')}
                   </label>
                   <select
                     value={service}
@@ -156,56 +184,59 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                       outline: 'none'
                     }}
                   >
-                    <option value="">-- Choose a Service --</option>
-                    <option value="Counselling Psychology">Counselling Psychology</option>
-                    <option value="Clinical Hypnotherapy">Clinical Hypnotherapy</option>
-                    <option value="Acupuncture Healing">Acupuncture Healing</option>
-                    <option value="Access Bars® Session">Access Bars® Session</option>
-                    <option value="Family Constellation">Family Constellation</option>
-                    <option value="Training & Facilitation">Training & Workshop Facilitation</option>
-                    <option value="General Consultation">General Wellness Consultation</option>
+                    <option value="">{t('modal_choose_service')}</option>
+                    <option value="Counselling Psychology">{t('service_counselling_title')}</option>
+                    <option value="Clinical Hypnotherapy">{t('service_hypno_title')}</option>
+                    <option value="Acupuncture Healing">{t('service_acu_title')}</option>
+                    <option value="Access Bars® Session">{t('service_access_title')}</option>
+                    <option value="Family Constellation">{t('service_const_title')}</option>
+                    <option value="Training & Facilitation">{t('service_train_title')}</option>
+                    <option value="General Consultation">{t('nav_book')}</option>
                   </select>
                 </div>
 
                 {/* Session Mode */}
                 <div>
                   <label style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', color: '#3B483C', display: 'block', marginBottom: '6px' }}>
-                    Session Format
+                    {t('modal_mode_label')}
                   </label>
                   <div style={{ display: 'flex', gap: '12px' }}>
-                    {['In-Person Sanctuary', 'Online Video Session'].map((m) => (
+                    {[
+                      { key: 'In-Person Sanctuary', label: t('modal_mode_inperson') },
+                      { key: 'Online Video Session', label: t('modal_mode_online') }
+                    ].map((item) => (
                       <button
                         type="button"
-                        key={m}
-                        onClick={() => setMode(m)}
+                        key={item.key}
+                        onClick={() => setMode(item.key)}
                         style={{
                           flex: 1,
                           padding: '10px 14px',
                           borderRadius: '4px',
-                          border: mode === m ? '1.5px solid #B8956A' : '1px solid rgba(184, 149, 106, 0.3)',
-                          backgroundColor: mode === m ? 'rgba(184, 149, 106, 0.12)' : '#FFFFFF',
-                          color: mode === m ? '#2B372C' : '#4A3F35',
+                          border: mode === item.key ? '1.5px solid #B8956A' : '1px solid rgba(184, 149, 106, 0.3)',
+                          backgroundColor: mode === item.key ? 'rgba(184, 149, 106, 0.12)' : '#FFFFFF',
+                          color: mode === item.key ? '#2B372C' : '#4A3F35',
                           fontSize: '13px',
                           fontWeight: 600,
                           cursor: 'pointer'
                         }}
                       >
-                        {m}
+                        {item.label}
                       </button>
                     ))}
                   </div>
                 </div>
 
                 {/* Name & Phone Grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
                   <div>
                     <label style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', color: '#3B483C', display: 'block', marginBottom: '6px' }}>
-                      Full Name *
+                      {t('modal_name_label')}
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="Your name"
+                      placeholder={t('modal_name_ph')}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       style={{
@@ -223,12 +254,12 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
 
                   <div>
                     <label style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', color: '#3B483C', display: 'block', marginBottom: '6px' }}>
-                      Phone Number *
+                      {t('modal_phone_label')}
                     </label>
                     <input
                       type="tel"
                       required
-                      placeholder="+1 (555) 000-0000"
+                      placeholder={t('modal_phone_ph')}
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       style={{
@@ -246,15 +277,15 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                 </div>
 
                 {/* Email & Date Grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
                   <div>
                     <label style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', color: '#3B483C', display: 'block', marginBottom: '6px' }}>
-                      Email Address *
+                      {t('modal_email_label')}
                     </label>
                     <input
                       type="email"
                       required
-                      placeholder="you@example.com"
+                      placeholder={t('modal_email_ph')}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       style={{
@@ -272,7 +303,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
 
                   <div>
                     <label style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', color: '#3B483C', display: 'block', marginBottom: '6px' }}>
-                      Preferred Date
+                      {t('modal_date_label')}
                     </label>
                     <input
                       type="date"
@@ -295,11 +326,11 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                 {/* Message */}
                 <div>
                   <label style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', color: '#3B483C', display: 'block', marginBottom: '6px' }}>
-                    Personal Note / What brings you to Aavira?
+                    {t('modal_note_label')}
                   </label>
                   <textarea
                     rows={3}
-                    placeholder="Share any specific goals or details..."
+                    placeholder={t('modal_note_ph')}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     style={{
@@ -319,11 +350,12 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                 {/* Submit Button */}
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="btn-bronze"
-                  style={{ width: '100%', marginTop: '10px', padding: '16px' }}
+                  style={{ width: '100%', marginTop: '10px', padding: '16px', opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'wait' : 'pointer' }}
                 >
                   <Sparkles style={{ width: '16px', height: '16px' }} />
-                  CONFIRM CONSULTATION REQUEST
+                  {isSubmitting ? t('modal_sending') : t('modal_submit')}
                 </button>
               </form>
             </div>

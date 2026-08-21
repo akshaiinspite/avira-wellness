@@ -1,28 +1,31 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, UserCheck, Layers, ArrowUpRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export const WhyAavira: React.FC = () => {
+  const { t } = useLanguage();
+
   const pillars = [
     {
-      title: 'Compassionate',
+      title: t('pillar1_title'),
       icon: <Heart style={{ width: '30px', height: '30px', color: '#B8956A' }} />,
-      desc: 'A welcoming, safe and non-judgemental environment.'
+      desc: t('pillar1_desc')
     },
     {
-      title: 'Personalised',
+      title: t('pillar2_title'),
       icon: <UserCheck style={{ width: '30px', height: '30px', color: '#B8956A' }} />,
-      desc: 'Approaches thoughtfully considered around your needs, goals and comfort.'
+      desc: t('pillar2_desc')
     },
     {
-      title: 'Integrative',
+      title: t('pillar3_title'),
       icon: <Layers style={{ width: '30px', height: '30px', color: '#B8956A' }} />,
-      desc: 'A combination of psychological and complementary wellness practices where appropriate.'
+      desc: t('pillar3_desc')
     },
     {
-      title: 'Empowering',
+      title: t('pillar4_title'),
       icon: <ArrowUpRight style={{ width: '30px', height: '30px', color: '#B8956A' }} />,
-      desc: 'Supporting you in developing awareness, clarity and a stronger connection with yourself.'
+      desc: t('pillar4_desc')
     }
   ];
 
@@ -71,7 +74,7 @@ export const WhyAavira: React.FC = () => {
               marginBottom: '10px'
             }}
           >
-            WHY AAVIRA?
+            {t('why_tag')}
           </span>
           <h2
             className="font-serif"
@@ -82,11 +85,11 @@ export const WhyAavira: React.FC = () => {
               marginBottom: '16px'
             }}
           >
-            A Compassionate Space for Your Journey
+            {t('why_title')}
           </h2>
           <div className="gold-line" style={{ width: '80px', margin: '0 auto 20px auto' }} />
           <p style={{ fontSize: '16.5px', color: 'rgba(245, 241, 232, 0.88)', lineHeight: 1.8 }}>
-            At Aavira, your experience comes first. We recognise that every individual is different, and wellbeing cannot always follow a one-size-fits-all approach. Our work is centred around understanding your needs and creating an experience that feels safe, respectful and meaningful to you.
+            {t('why_sub')}
           </p>
         </motion.div>
 
@@ -100,7 +103,7 @@ export const WhyAavira: React.FC = () => {
         >
           {pillars.map((pillar, idx) => (
             <motion.div
-              key={pillar.title}
+              key={idx}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

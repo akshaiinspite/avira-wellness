@@ -1,7 +1,9 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 export const PhilosophyBanner: React.FC = () => {
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -79,7 +81,7 @@ export const PhilosophyBanner: React.FC = () => {
               marginBottom: '20px'
             }}
           >
-            OUR GUIDING PHILOSOPHY
+            {t('philo_tag')}
           </motion.span>
 
           <h2
@@ -93,7 +95,7 @@ export const PhilosophyBanner: React.FC = () => {
               textShadow: '0 4px 20px rgba(0,0,0,0.5)'
             }}
           >
-            "Wellbeing Begins With Understanding Yourself"
+            {t('philo_title')}
           </h2>
 
           {/* Dynamic Gold Line Expand Scroll Animation */}
@@ -121,7 +123,7 @@ export const PhilosophyBanner: React.FC = () => {
               letterSpacing: '1px'
             }}
           >
-            Listen. Understand. Integrate. Empower.
+            {t('philo_sub')}
           </motion.p>
 
           <p
@@ -134,7 +136,7 @@ export const PhilosophyBanner: React.FC = () => {
               textShadow: '0 2px 10px rgba(0,0,0,0.4)'
             }}
           >
-            We believe that every individual holds the intrinsic capability to heal. Our role is to create the sacred container, provide gentle guidance, and facilitate your alignment with your true potential.
+            {t('philo_desc')}
           </p>
         </motion.div>
       </div>

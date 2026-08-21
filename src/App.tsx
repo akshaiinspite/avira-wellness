@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { LanguageProvider } from './context/LanguageContext';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { WelcomeSection } from './components/WelcomeSection';
@@ -10,47 +11,80 @@ import { AreasOfWellbeing } from './components/AreasOfWellbeing';
 import { WhyAavira } from './components/WhyAavira';
 import { ConsultationModal } from './components/ConsultationModal';
 import { Footer } from './components/Footer';
+import { AboutPage } from './components/AboutPage';
+import { ServicesPage } from './components/ServicesPage';
+import { ApproachPage } from './components/ApproachPage';
+import { ContactPage } from './components/ContactPage';
 
 export function App() {
+  const [currentPage, setCurrentPage] = useState<'home' | 'about' | 'services' | 'approach' | 'contact'>('home');
   const [activeSection, setActiveSection] = useState('home');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedServiceForBooking, setSelectedServiceForBooking] = useState('');
 
-  // Scrollspy observer for active section header highlights
+  // Lock activeSection directly to currentPage so scrolling on the Home page keeps 'HOME' active in header navigation
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'about', 'services', 'approach', 'contact'];
-      const scrollPosition = window.scrollY + 200;
+    setActiveSection(currentPage);
+  }, [currentPage]);
 
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(sectionId);
-            break;
+  const handleNavigate = (targetId: string) => {
+    if (targetId === 'about') {
+      setCurrentPage('about');
+      setActiveSection('about');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (targetId === 'services') {
+      setCurrentPage('services');
+      setActiveSection('services');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (targetId === 'approach') {
+      setCurrentPage('approach');
+      setActiveSection('approach');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (targetId === 'contact') {
+      setCurrentPage('contact');
+      setActiveSection('contact');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (currentPage !== 'home') {
+      setCurrentPage('home');
+      setActiveSection(targetId);
+      setTimeout(() => {
+        if (targetId === 'home') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const element = document.getElementById(targetId);
+          if (element) {
+            const navOffset = 80;
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({ top: elementPosition - navOffset, behavior: 'smooth' });
           }
         }
+      }, 100);
+      return;
+    }
+
+    // Single page anchor scrolling when already on home
+    setActiveSection(targetId);
+    if (targetId === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const element = document.getElementById(targetId);
+      if (element) {
+        const navOffset = 80;
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: elementPosition - navOffset, behavior: 'smooth' });
       }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (sectionId: string) => {
-    setActiveSection(sectionId);
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const navOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - navOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
     }
   };
 
@@ -64,66 +98,101 @@ export function App() {
   };
 
   return (
-    <div style={{ backgroundColor: '#F5F1E8', minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
-      
-      {/* Sticky Header Navigation */}
-      <Header
-        activeSection={activeSection}
-        onNavigate={scrollToSection}
-        onOpenBooking={() => handleOpenBooking()}
-      />
-
-      {/* Main Home Page Sections */}
-      <main>
-        {/* Hero Section */}
-        <Hero
+    <LanguageProvider>
+      <div style={{ backgroundColor: '#F5F1E8', minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
+        
+        {/* Sticky Header Navigation */}
+        <Header
+          activeSection={currentPage !== 'home' ? currentPage : activeSection}
+          onNavigate={handleNavigate}
           onOpenBooking={() => handleOpenBooking()}
-          onExploreServices={() => scrollToSection('services')}
         />
 
-        {/* Welcome Section & Meet Afeefa M. P. */}
-        <WelcomeSection
-          onOpenBooking={() => handleOpenBooking('General Consultation')}
+        {/* Main Page Rendering */}
+        {currentPage === 'about' && (
+          <AboutPage
+            onOpenBooking={(serviceName) => handleOpenBooking(serviceName)}
+            onNavigateHome={() => handleNavigate('home')}
+          />
+        )}
+
+        {currentPage === 'services' && (
+          <ServicesPage
+            onOpenBooking={(serviceName) => handleOpenBooking(serviceName)}
+            onNavigateHome={() => handleNavigate('home')}
+          />
+        )}
+
+        {currentPage === 'approach' && (
+          <ApproachPage
+            onOpenBooking={(serviceName) => handleOpenBooking(serviceName)}
+            onNavigateServices={() => handleNavigate('services')}
+            onNavigateHome={() => handleNavigate('home')}
+          />
+        )}
+
+        {currentPage === 'contact' && (
+          <ContactPage
+            onOpenBooking={(serviceName) => handleOpenBooking(serviceName)}
+            onNavigateHome={() => handleNavigate('home')}
+          />
+        )}
+
+        {currentPage === 'home' && (
+          <main>
+            {/* Hero Section */}
+            <Hero
+              onOpenBooking={() => handleOpenBooking()}
+              onExploreServices={() => handleNavigate('services')}
+            />
+
+            {/* Welcome Section & Meet Afeefa */}
+            <WelcomeSection
+              onOpenBooking={() => handleNavigate('about')}
+            />
+
+            {/* Our Services Section */}
+            <ServicesSection
+              onOpenBooking={(serviceName) => handleOpenBooking(serviceName)}
+            />
+
+            {/* Featured Experience: A Day With Thyself */}
+            <DayWithThyself
+              onOpenBooking={(serviceName) => handleOpenBooking(serviceName)}
+            />
+
+            {/* Philosophy Banner */}
+            <PhilosophyBanner />
+
+            {/* Our Approach Section */}
+            <ApproachSteps
+              onOpenBooking={() => handleOpenBooking('General Consultation')}
+            />
+
+            {/* Areas of Wellbeing */}
+            <AreasOfWellbeing />
+
+            {/* Why Choose Aavira */}
+            <WhyAavira />
+          </main>
+        )}
+
+        {/* Interactive Consultation Booking Modal */}
+        <ConsultationModal
+          isOpen={isBookingOpen}
+          onClose={() => setIsBookingOpen(false)}
+          initialService={selectedServiceForBooking}
         />
 
-        {/* Our Services Section */}
-        <ServicesSection
-          onOpenBooking={(serviceName) => handleOpenBooking(serviceName)}
+        {/* Footer & Contact Preview */}
+        <Footer
+          onOpenBooking={() => handleOpenBooking()}
+          onNavigate={handleNavigate}
         />
-
-        {/* Featured Experience: A Day With Thyself */}
-        <DayWithThyself
-          onOpenBooking={(serviceName) => handleOpenBooking(serviceName)}
-        />
-
-        {/* Philosophy Banner */}
-        <PhilosophyBanner />
-
-        {/* Our Approach Section */}
-        <ApproachSteps
-          onOpenBooking={() => handleOpenBooking('General Consultation')}
-        />
-
-        {/* Areas of Wellbeing */}
-        <AreasOfWellbeing />
-
-        {/* Why Choose Aavira */}
-        <WhyAavira />
-      </main>
-
-      {/* Interactive Consultation Booking Modal */}
-      <ConsultationModal
-        isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
-        initialService={selectedServiceForBooking}
-      />
-
-      {/* Footer & Contact Preview */}
-      <Footer
-        onOpenBooking={() => handleOpenBooking()}
-      />
-    </div>
+      </div>
+    </LanguageProvider>
   );
 }
 
 export default App;
+
