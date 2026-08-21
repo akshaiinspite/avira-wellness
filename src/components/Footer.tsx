@@ -130,7 +130,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenBooking, onNavigate }) => 
           <div>
             <div style={{ marginBottom: '20px' }}>
               <img
-                src="/images/logo-2.png"
+                src="/images/footer-logo.png"
                 alt="Aavira Wellness Logo"
                 style={{
                   height: '220px',

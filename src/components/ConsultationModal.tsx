@@ -38,7 +38,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
     setIsSubmitting(true);
     
     try {
-      await fetch('https://formsubmit.co/ajax/contact@aavirawellness.com', {
+      await fetch('https://formsubmit.co/ajax/aavirawellness@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +53,8 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
           'Preferred Date': date || 'Flexible',
           'Client Note / Message': message || 'N/A',
           _subject: `New Consultation Request: ${name} (${service || 'General'})`,
-          _template: 'table'
+          _template: 'table',
+          _captcha: 'false'
         })
       });
     } catch (error) {

@@ -36,7 +36,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenBooking, onNavig
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await fetch('https://formsubmit.co/ajax/contact@aavirawellness.com', {
+      await fetch('https://formsubmit.co/ajax/aavirawellness@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +49,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenBooking, onNavig
           'Service Interested In': formData.service,
           'Enquiry Message': formData.message || 'N/A',
           _subject: `New Website Enquiry: ${formData.name} (${formData.service})`,
-          _template: 'table'
+          _template: 'table',
+          _captcha: 'false'
         })
       });
     } catch (error) {

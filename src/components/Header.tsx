@@ -85,12 +85,12 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, onOpe
             src="/images/logo-org.png"
             alt="Aavira Wellness Logo"
             style={{
-              height: isScrolled ? '48px' : '62px',
+              height: isScrolled ? '65px' : '88px',
               width: 'auto',
-              maxHeight: '75px',
+              maxHeight: '95px',
               objectFit: 'contain',
               transition: 'all 0.3s ease',
-              filter: 'drop-shadow(0 3px 12px rgba(0,0,0,0.6))'
+              filter: 'drop-shadow(0 4px 14px rgba(0,0,0,0.65))'
             }}
           />
         </div>
