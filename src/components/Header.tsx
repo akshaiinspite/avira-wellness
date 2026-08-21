@@ -71,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, onOpe
           style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', flexShrink: 0 }}
         >
           <img
-            src="/images/logo-2.png"
+            src="/images/logo-org.png"
             alt="Aavira Wellness Logo"
             style={{
               height: isScrolled ? '56px' : '72px',
@@ -210,7 +210,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, onOpe
         <div
           style={{
             position: 'fixed',
-            top: '75px',
+            top: isScrolled ? '65px' : '80px',
             left: 0,
             right: 0,
             bottom: 0,

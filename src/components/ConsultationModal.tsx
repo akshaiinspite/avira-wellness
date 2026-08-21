@@ -95,7 +95,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
             maxHeight: '90vh',
             overflowY: 'auto',
             borderRadius: '8px',
-            padding: '40px 32px',
+            padding: 'clamp(20px, 4vw, 40px) clamp(16px, 4vw, 32px)',
             position: 'relative',
             boxShadow: '0 30px 70px rgba(0,0,0,0.4)',
             border: '1px solid #B8956A'
