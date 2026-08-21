@@ -27,6 +27,17 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, onOpe
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { id: 'home', label: t('nav_home') },
     { id: 'about', label: t('nav_about') },
@@ -49,10 +60,10 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, onOpe
         right: 0,
         zIndex: 1000,
         transition: 'all 0.4s ease',
-        backgroundColor: isScrolled ? 'rgba(20, 27, 21, 0.96)' : 'rgba(16, 22, 17, 0.75)',
+        backgroundColor: isScrolled ? 'rgba(20, 27, 21, 0.96)' : 'rgba(16, 22, 17, 0.85)',
         backdropFilter: 'blur(16px)',
         boxShadow: isScrolled ? '0 12px 35px rgba(0,0,0,0.4)' : 'none',
-        padding: isScrolled ? '6px 0' : '12px 0',
+        padding: isScrolled ? '6px 0' : '10px 0',
         borderBottom: isScrolled ? '1px solid rgba(184, 149, 106, 0.3)' : '1px solid rgba(245, 241, 232, 0.12)',
       }}
     >
@@ -74,9 +85,9 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, onOpe
             src="/images/logo-org.png"
             alt="Aavira Wellness Logo"
             style={{
-              height: isScrolled ? '56px' : '72px',
+              height: isScrolled ? '48px' : '62px',
               width: 'auto',
-              maxHeight: '80px',
+              maxHeight: '75px',
               objectFit: 'contain',
               transition: 'all 0.3s ease',
               filter: 'drop-shadow(0 3px 12px rgba(0,0,0,0.6))'
@@ -192,16 +203,20 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, onOpe
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           style={{
             background: 'none',
-            border: 'none',
             color: '#F5F1E8',
             cursor: 'pointer',
-            padding: '8px',
-            display: 'block'
+            padding: '10px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '6px',
+            backgroundColor: mobileMenuOpen ? 'rgba(184, 149, 106, 0.2)' : 'transparent',
+            border: '1px solid rgba(184, 149, 106, 0.3)'
           }}
           className="mobile-toggle"
           aria-label="Toggle Navigation Menu"
         >
-          {mobileMenuOpen ? <X size={28} style={{ color: '#B8956A' }} /> : <Menu size={28} />}
+          {mobileMenuOpen ? <X size={26} style={{ color: '#B8956A' }} /> : <Menu size={26} style={{ color: '#F5F1E8' }} />}
         </button>
       </div>
 
@@ -209,25 +224,27 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, onOpe
       {mobileMenuOpen && (
         <div
           style={{
-            position: 'fixed',
-            top: isScrolled ? '65px' : '80px',
+            position: 'absolute',
+            top: '100%',
             left: 0,
             right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(20, 27, 21, 0.98)',
-            backdropFilter: 'blur(15px)',
+            minHeight: 'calc(100vh - 100%)',
+            height: '100vh',
+            backgroundColor: 'rgba(18, 25, 19, 0.98)',
+            backdropFilter: 'blur(20px)',
             display: 'flex',
             flexDirection: 'column',
-            padding: '30px 24px',
-            gap: '16px',
-            zIndex: 999,
-            borderTop: '1px solid rgba(184, 149, 106, 0.2)',
-            overflowY: 'auto'
+            padding: '24px 20px 100px 20px',
+            gap: '14px',
+            zIndex: 1001,
+            borderTop: '1px solid rgba(184, 149, 106, 0.3)',
+            overflowY: 'auto',
+            boxShadow: '0 25px 50px rgba(0,0,0,0.5)'
           }}
         >
           {/* Mobile Language Switcher */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '14px', borderBottom: '1px solid rgba(184, 149, 106, 0.2)' }}>
-            <span style={{ fontSize: '13px', color: '#B8956A', fontWeight: 600, letterSpacing: '1px' }}>LANGUAGE / ഭാഷ</span>
+            <span style={{ fontSize: '12.5px', color: '#B8956A', fontWeight: 600, letterSpacing: '1px' }}>LANGUAGE / ഭാഷ</span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: 'rgba(184, 149, 106, 0.18)', border: '1px solid rgba(184, 149, 106, 0.45)', borderRadius: '20px', padding: '6px 14px' }}>
               <Globe style={{ width: '15px', height: '15px', color: '#B8956A' }} />
               <select
@@ -249,28 +266,41 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, onOpe
             </div>
           </div>
 
-          {navLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => handleLinkClick(link.id)}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: activeSection === link.id ? '#B8956A' : '#F5F1E8',
-                fontSize: '17px',
-                fontFamily: isMl ? 'inherit' : 'var(--font-serif)',
-                fontWeight: activeSection === link.id ? 700 : 500,
-                letterSpacing: isMl ? '0px' : '1.5px',
-                textAlign: 'left',
-                cursor: 'pointer',
-                padding: '10px 0',
-                borderBottom: '1px solid rgba(255,255,255,0.05)'
-              }}
-            >
-              {link.label}
-            </button>
-          ))}
+          {/* Navigation Links */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '6px' }}>
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleLinkClick(link.id)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                    backgroundColor: isActive ? 'rgba(184, 149, 106, 0.18)' : 'rgba(255, 255, 255, 0.04)',
+                    border: isActive ? '1px solid rgba(184, 149, 106, 0.5)' : '1px solid rgba(184, 149, 106, 0.15)',
+                    borderRadius: '8px',
+                    color: isActive ? '#B8956A' : '#F5F1E8',
+                    fontSize: '15.5px',
+                    fontFamily: isMl ? 'inherit' : 'var(--font-serif)',
+                    fontWeight: isActive ? 700 : 500,
+                    letterSpacing: isMl ? '0px' : '1px',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    padding: '14px 18px',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <span>{link.label}</span>
+                  <span style={{ color: isActive ? '#B8956A' : 'rgba(245, 241, 232, 0.4)', fontSize: '15px' }}>→</span>
+                </button>
+              );
+            })}
+          </div>
 
+          {/* Booking CTA Button */}
           <div style={{ marginTop: '16px' }}>
             <button
               onClick={() => {
@@ -278,7 +308,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, onOpe
                 setMobileMenuOpen(false);
               }}
               className="btn-bronze"
-              style={{ width: '100%', justifyContent: 'center', padding: '14px', fontSize: isMl ? '12.5px' : '11.5px' }}
+              style={{ width: '100%', justifyContent: 'center', padding: '15px', fontSize: isMl ? '12.5px' : '11.5px', display: 'flex', alignItems: 'center', gap: '8px' }}
             >
               <Calendar style={{ width: '16px', height: '16px' }} />
               <span>{t('nav_book')}</span>
